@@ -11,8 +11,8 @@
 | encrypted_password | sting | null: false                |
 | first_name         | sting | null: false                |
 | last_name          | sting | null: false                |
-| kana_first_name    | sting | null: false                |
-| kana_last_name     | sting | null: false                |
+| kana_firstname    | sting | null: false                |
+| kana_lastname     | sting | null: false                |
 | birthday           | date  | null: false                |
 
 ### Association
