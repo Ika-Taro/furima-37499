@@ -67,11 +67,30 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Selling price can't be blank")
       end
 
+      it 'selling_priceが300円以下では保存できない' do
+        @item.selling_price = '10'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Selling price must be greater than or equal to 300")
+      end
+
+
 
       it 'selling_priceが9999999円以上では保存できない' do
         @item.selling_price = '1000000000000'
         @item.valid?
         expect(@item.errors.full_messages).to include("Selling price must be less than or equal to 9999999")
+      end
+
+      it 'selling_priceに半角数字以外が含めれている場合は保存できない' do
+        @item.selling_price = '５５５'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Selling price is not a number")
+      end
+
+      it 'userが紐づいていなければ保存できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include("User must exist")
       end
 
     end
