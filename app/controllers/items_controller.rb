@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  before_action :authenticate_user!, only: [:new]
   
   def index
 
@@ -18,11 +19,6 @@ class ItemsController < ApplicationController
   end
   
   private
-
-  # アクティブストレージの記述
-  # def item_params 
-  #   params.require(:item).permit(:content, image).merge(user_id: current_user.id)
-  # end
 
   def item_params
     params.require(:item).permit(:image, :item_name, :item_description, :item_category_id, :item_condition_id, :delivery_charge_id, :prefecture_id, :take_for_shipping_id, :selling_price).merge(user_id: current_user.id)
