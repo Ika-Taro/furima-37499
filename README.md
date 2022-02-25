@@ -44,11 +44,11 @@
 | ------------------ | ---------- | ------------------------------ |
 | post_code          | sting      | null: false                    |
 | prefecture_id      | integer    | null: false                    |
-| municipalities     | sting      | null: false                    |
+| municipality     | sting      | null: false                    |
 | address            | sting      | null: false                    |
 | building_name      | sting      |                                |
 | phone_number       | sting      | null: false                    |
-| purchase_record_id | references | null: false ,foreign_key: true |
+| purchase_record | references | null: false ,foreign_key: true |
 
 ### Association
 
