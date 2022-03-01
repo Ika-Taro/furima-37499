@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   
   def index
     @purchase_address = PurchaseAddress.new
-    if @item.purchase_record.present?
+    if @item.purchase_record.present? || current_user.id == @item.user_id
       redirect_to root_path
     end
   end
@@ -26,6 +26,7 @@ class OrdersController < ApplicationController
   
   def order_params
     params.require(:purchase_address).permit(:post_code, :prefecture_id, :municipality, :address, :building_name, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+    # params.require(:purchase_address).permit(:post_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :user_id, :item_id).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
   end
 
   def pay_item
@@ -38,6 +39,6 @@ class OrdersController < ApplicationController
   end
 
   def set_item
-    @item = Item.find(params[:id])
+    @item = Item.find(params[:item_id])
   end
 end
