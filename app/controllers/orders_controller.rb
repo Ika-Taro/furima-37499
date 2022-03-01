@@ -3,6 +3,9 @@ class OrdersController < ApplicationController
   def index
     @item = Item.find(params[:item_id])
     @purchase_address = PurchaseAddress.new
+    if @item.purchase_record.present?
+      redirect_to root_path
+    end
   end
 
 
