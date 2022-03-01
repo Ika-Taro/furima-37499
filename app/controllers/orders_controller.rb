@@ -1,7 +1,8 @@
 class OrdersController < ApplicationController
+  before_action :set_item, only: [:index, :create]
+
   
   def index
-    @item = Item.find(params[:item_id])
     @purchase_address = PurchaseAddress.new
     if @item.purchase_record.present?
       redirect_to root_path
@@ -10,7 +11,6 @@ class OrdersController < ApplicationController
 
 
   def create
-    @item = Item.find(params[:item_id])
     @purchase_address = PurchaseAddress.new(order_params)
     
     if @purchase_address.valid?
@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
   private
   
   def order_params
-    params.require(:purchase_address).permit(:post_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :user_id, :item_id).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
+    params.require(:purchase_address).permit(:post_code, :prefecture_id, :municipality, :address, :building_name, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 
   def pay_item
@@ -37,5 +37,7 @@ class OrdersController < ApplicationController
     )
   end
 
-
+  def set_item
+    @item = Item.find(params[:id])
+  end
 end
