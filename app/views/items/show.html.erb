@@ -8,11 +8,11 @@
     </h2>
     <div class="item-img-content">
       <%= image_tag @item.image ,class:"item-box-img" %>
-          <%# <% if @item.purchase_record.blank? %>
-          <%# <div class='sold-out'>
+          <% if @item.purchase_record.present? %>
+          <div class='sold-out'>
             <span>Sold Out!!</span>
-          </div> %>
-          <%# <% end %>
+          </div>
+          <% end %>
     </div>
     <div class="item-price-box">
       <span class="item-price">
@@ -23,17 +23,15 @@
       </span>
     </div>
 
-    <%# あとで付け足す && @item.purchase_record.present? %>
-    <% if user_signed_in? %> 
-      <% if current_user.id == @item.user_id %>
-        <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
-        <p class="or-text">or</p>
-        <%= link_to "削除", "/items/#{@item.id}", method: :delete, class:"item-destroy" %>
-      <% else %>
-
-        <%# 商品が売れていない場合はこちらを表示しましょう %>
-        <%= link_to "購入画面に進む", "#" ,class:"item-red-btn"%>
-        <%# //商品が売れていない場合はこちらを表示しましょう %>
+      <% if user_signed_in? && @item.purchase_record.blank?%> 
+        <% if current_user.id == @item.user_id %>
+          <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
+          <p class="or-text">or</p>
+          <%= link_to "削除", "/items/#{@item.id}", method: :delete, class:"item-destroy" %>
+        <% else %>
+          <%= link_to "購入画面に進む", item_orders_path(@item.id) ,class:"item-red-btn"%>
+        <% end %>
+      <% end %>
 
           <div class="item-explain-box">
             <span><%= @item.item_description %></span>
@@ -77,8 +75,6 @@
             </div>
           </div>
         </div>
-      <% end %>
-    <% end %>
 
   <div class="comment-box">
     <form>
