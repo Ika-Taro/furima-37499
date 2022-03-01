@@ -1,5 +1,4 @@
 class OrdersController < ApplicationController
-  # before_action :authenticate_user!
   
   def index
     @item = Item.find(params[:item_id])
@@ -8,7 +7,6 @@ class OrdersController < ApplicationController
 
 
   def create
-    binding.pry
     @item = Item.find(params[:item_id])
     @purchase_address = PurchaseAddress.new(order_params)
     
